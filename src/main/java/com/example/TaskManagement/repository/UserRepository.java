@@ -23,12 +23,15 @@ public interface UserRepository extends JpaRepository<User, UUID> {
     List<User> findByActive(Boolean active);
 
     @Query(
-            value = "SELECT (COUNT(*) > 0) " +
-                    "FROM tasks t " +
-                    "WHERE t.assigned_to = :userId " +
-                    "AND t.status NOT IN ('COMPLETED', 'CANCELLED')",
+            value = """
+        SELECT COUNT(*)
+        FROM tasks t
+        WHERE t.assigned_to = :userId
+        AND t.status NOT IN ('COMPLETED', 'CANCELLED')
+        """,
             nativeQuery = true
     )
-    boolean hasActiveTasks(UUID userId);
+    long countActiveTasks(UUID userId);
+
 
 }

@@ -88,9 +88,10 @@ public class UserService {
         User user = userRepository.findById(id)
                 .orElseThrow(() -> new ResourceNotFoundException("User not Found!"));
 
-        if(userRepository.hasActiveTasks(id)){
+        if (userRepository.countActiveTasks(id) > 0) {
             throw new RuleViolationException(
-                    "Cannot delete user with active assigned tasks. User ID: " + id);
+                    "Cannot delete user with active assigned tasks. User ID: " + id
+            );
         }
 
         user.setActive(false);

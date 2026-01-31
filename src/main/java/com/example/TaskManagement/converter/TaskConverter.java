@@ -7,6 +7,8 @@ import com.example.TaskManagement.model.Task;
 
 import java.util.stream.Collectors;
 
+import static com.example.TaskManagement.converter.UserConverter.toUserSummary;
+
 public class TaskConverter {
 
     public static TaskResponseDto toTaskRespone(Task task){
@@ -17,8 +19,8 @@ public class TaskConverter {
                 task.getDescription(),
                 task.getStatus(),
                 task.getPriority(),
-                UserConverter.toUserSummary(task.getCreatedBy()),
-                UserConverter.toUserSummary(task.getAssignedTo()),
+                toUserSummary(task.getCreatedBy()),
+                task.getAssignedTo() != null ? toUserSummary(task.getAssignedTo()) : null,
                 task.getDueDate(),
                 task.getTags(),
                 task.getCreatedAt(),
@@ -35,7 +37,7 @@ public class TaskConverter {
                 task.getTitle(),
                 task.getStatus(),
                 task.getPriority(),
-                UserConverter.toUserSummary(task.getAssignedTo()),
+                toUserSummary(task.getAssignedTo()),
                 task.getDueDate()
 
         );
